@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R-P-S Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/e391ce7786.js" crossorigin="anonymous"></script>
+    <script src="app.js" defer></script>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1{
+    font-family: sans-serif;
+    font-weight: 800;
+    margin: 15px 0;
+}
+.container{
+    display: flex;
+}
+.container .section{
+    width: 350px;
+    margin: 20px 50px;
+}
+.section .info{
+    background: rgb(10, 10, 10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+.info span , .info h3{
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0px 10px;
+    font-family: sans-serif;
+    color: white;
+}
+.show{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background : rgb(41, 40, 40);
+    height: 220px;
+}
+.show i{
+    font-size: 100px;
+    color: orange;
+}
+h2{
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 5px;
+}
+.selection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+    height: 100px;
+}
+.selection button{
+    margin: 0 20px;
+    padding: 25px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background : rgb(41, 40, 40);
+    font-size: 33px;
+    color: orange;
+}
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <h2 id="demo">Try your luck !</h2>
+<!--  The Container  -->
+    <div class="container">
+<!--   The first section     -->
+        <div class="section">
+            <div class="info">
+                <h3>You :</h3><span id="playerScore">0</span>
+            </div>
+            <div class="show">
+                <i class="fas fa-hand-rock"></i>
+            </div>
+        </div>
+<!--   The second section     -->
+        <div class="section">
+            <div class="info">
+                <h3>Computer :</h3><span id="computerScore">0</span>
+            </div>
+            <div class="show computer">
+                <i class="fas fa-hand-scissors"></i>
+            </div>
+        </div>
+    </div>
+    <h2 style="color: rgb(233, 33, 19);" id="demo2">Choose One !</h2>
+<!-- This selection div contains the buttons   -->
+    <div class="selection">
+        <button class="fas fa-hand-rock" id="rock"></button>
+        <button class="fas fa-hand-paper" id="paper"></button>
+        <button class="fas fa-hand-scissors" id="scissors"></button>
+    </div>
+</body>
+<script>
+    // Setting the scores and selecting our HTML elements.
+let computerScore = 1;
+let playerScore = 1;
+const pScore = document.getElementById('playerScore');
+const cScore = document.getElementById('computerScore');
+const buttons = document.querySelectorAll('.selection button');
+const showIcon = document.querySelector('.show i');
+const computerShowIcon = document.querySelector('.computer i');
+// The randomClass array below this contains the rock,paper, and scissor Icon from font-awesome.
+const randomClasses = ["fas fa-hand-rock", "fas fa-hand-paper","fas fa-hand-scissors"];
+const text = document.getElementById('demo');
+const text2 = document.getElementById('demo2');
+
+// Game Functionality: Setting forEach function for the buttons.
+const game = () =>{
+    buttons.forEach(btn =>{
+        btn.addEventListener('click',(e)=>{
+        // Random rock paper scissor for the computer and the player
+           let clickedBtn = e.target.className;
+           showIcon.className = clickedBtn;
+           let randomNum = Math.floor(Math.random() * randomClasses.length);
+           computerShowIcon.className = randomClasses[randomNum];
+           // Game Score.
+           // If it's a Tie .
+           if(showIcon.className === computerShowIcon.className){
+               pScore.innerHTML = pScore.innerHTML;
+               cScore.innerHTML = cScore.innerHTML;
+               text.innerHTML = "It's a Tie ! ";
+               text.style.color = 'orange';
+               text2.innerHTML = text.innerHTML;
+               text2.style.color = 'orange';
+           } 
+          // if it's not a Tie.
+           else if(showIcon.className === randomClasses[0] && computerShowIcon.className === randomClasses[2]){
+               pScore.innerHTML = playerScore;
+               playerScore++;
+               text.innerHTML = "It's a Win ! ";
+               text.style.color = 'rgb(1, 146, 1)';
+               text2.innerHTML = text.innerHTML;
+               text2.style.color = 'rgb(1, 146, 1)';
+           }else if(showIcon.className === randomClasses[0] && computerShowIcon.className === randomClasses[1]){
+               cScore.innerHTML = computerScore;
+               computerScore++;
+               text.innerHTML = "You Loosed ! ";
+               text.style.color = 'red';
+               text2.innerHTML = text.innerHTML;
+               text2.style.color = 'red';
+           }else if(showIcon.className === randomClasses[1] && computerShowIcon.className === randomClasses[2]){
+               cScore.innerHTML = computerScore;
+               computerScore++;
+               text.innerHTML = "You Loosed ! ";
+               text.style.color = 'red';
+               text2.innerHTML = text.innerHTML;
+               text2.style.color = 'red';
+           }else if(showIcon.className === randomClasses[1] && computerShowIcon.className === randomClasses[0]){
+               pScore.innerHTML = playerScore;
+               playerScore++;
+               text.innerHTML = "It's a Win ! ";
+               text.style.color = 'rgb(1, 146, 1)';
+               text2.innerHTML = text.innerHTML;
+               text2.style.color = 'rgb(1, 146, 1)';
+           }else if(showIcon.className === randomClasses[2] && computerShowIcon.className === randomClasses[0]){
+               cScore.innerHTML = computerScore;
+               computerScore++;
+               text.innerHTML = "You Loosed ! ";
+               text.style.color = 'red';
+               text2.innerHTML = text.innerHTML;
+               text2.style.color = 'red';
+           }else if(showIcon.className === randomClasses[2] && computerShowIcon.className === randomClasses[1]){
+               pScore.innerHTML = playerScore;
+               playerScore++;
+               text.innerHTML = "It's a Win ! ";
+               text.style.color = 'rgb(1, 146, 1)';
+               text2.innerHTML = text.innerHTML;
+               text2.style.color = 'rgb(1, 146, 1)';
+           }
+        });
+    });
+}
+// Calling the function.
+game();
+// This function contains all the game logic.
+    </script>
+</html>
